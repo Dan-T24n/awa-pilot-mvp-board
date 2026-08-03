@@ -2,7 +2,7 @@
 
 A public, standalone executive board for the AWA pilot MVP decision record.
 
-`site/index.html` is the concise reading layer. `site/full-record.html` retains the complete decision record.
+`site/index.html` is the executive overview. `site/full-record.html` is the sparse, decision-by-decision record, preserving the same sections and D1–D30 structure.
 
 ## View locally
 
