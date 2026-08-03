@@ -3,616 +3,358 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="AWA Pilot MVP decision record, rendered as a standalone review board.">
-<title>AWA — Pilot MVP decisions</title>
+<meta name="description" content="A concise executive board for AWA Pilot MVP decisions.">
+<title>AWA — Pilot MVP executive decisions</title>
 <style>
-:root {
-  --ink-25:#fbfcfd; --ink-50:#f3f5f7; --ink-100:#e9edf1; --ink-150:#dde3e9;
-  --ink-300:#aeb9c6; --ink-400:#8391a2; --ink-500:#637184; --ink-600:#48576a;
-  --ink-700:#334255; --ink-800:#202d3d; --ink-900:#121d2b; --ink-950:#09121e;
-  --brand-700:#103f68; --brand-900:#082641; --iris-100:#dce8ef; --iris-500:#3c718f;
-  --jade-50:#edf9f5; --jade-200:#a9e3d2; --jade-700:#0d5544;
-  --gold-100:#f8ecc9; --gold-600:#875f18;
-  --paper:#fff; --paper-line:#dfe5eb;
-  --sans: Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  --serif: Newsreader,Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; background:var(--ink-50); }
-body { margin:0; color:var(--ink-800); background:var(--ink-50); font:15px/1.68 var(--sans); }
-a { color:var(--brand-700); text-underline-offset:3px; }
-a:focus-visible, summary:focus-visible { outline:3px solid var(--iris-500); outline-offset:3px; border-radius:3px; }
-.shell { min-height:100vh; }
-.masthead { background:var(--ink-950); color:var(--ink-50); padding:28px max(24px, calc((100vw - 1360px)/2)); border-bottom:4px solid var(--brand-700); }
-.brandline { display:flex; align-items:center; gap:12px; color:var(--ink-300); font:11px/1 var(--mono); letter-spacing:.13em; text-transform:uppercase; }
-.perimeter { width:24px; height:24px; position:relative; flex:none; background:linear-gradient(var(--ink-50),var(--ink-50)) 0 0/8px 2px no-repeat,linear-gradient(var(--ink-50),var(--ink-50)) 0 0/2px 8px no-repeat,linear-gradient(var(--ink-50),var(--ink-50)) 100% 0/8px 2px no-repeat,linear-gradient(var(--ink-50),var(--ink-50)) 100% 0/2px 8px no-repeat,linear-gradient(var(--ink-50),var(--ink-50)) 0 100%/8px 2px no-repeat,linear-gradient(var(--ink-50),var(--ink-50)) 0 100%/2px 8px no-repeat,linear-gradient(var(--ink-50),var(--ink-50)) 100% 100%/8px 2px no-repeat,linear-gradient(var(--ink-50),var(--ink-50)) 100% 100%/2px 8px no-repeat; }
-.perimeter::after { content:""; position:absolute; width:5px; height:5px; border-radius:50%; background:#5f8fa9; left:9.5px; top:9.5px; }
-.masthead h1 { max-width:900px; margin:26px 0 8px; font:400 clamp(32px,5vw,58px)/1.02 var(--serif); letter-spacing:-.035em; }
-.masthead p { max-width:770px; margin:0; color:var(--ink-300); font-size:16px; }
-.board { display:grid; grid-template-columns:258px minmax(0,1fr); max-width:1360px; margin:0 auto; }
-.nav { position:sticky; top:0; align-self:start; height:100vh; overflow:auto; padding:25px 20px 40px; border-right:1px solid var(--ink-150); background:var(--ink-25); }
-.nav-label, .eyebrow { margin:0 0 10px; color:var(--ink-500); font:10px/1.3 var(--mono); letter-spacing:.13em; text-transform:uppercase; }
-.nav a { display:block; padding:8px 9px; margin:2px 0; border-left:2px solid transparent; color:var(--ink-600); font-size:13px; text-decoration:none; }
-.nav a:hover { color:var(--brand-700); background:var(--iris-100); border-left-color:var(--iris-500); }
-.content { min-width:0; padding:30px clamp(22px,5vw,72px) 80px; }
-.snapshot { display:grid; grid-template-columns:1.4fr repeat(3,minmax(120px,.6fr)); gap:1px; margin:0 0 34px; overflow:hidden; border:1px solid var(--ink-150); background:var(--ink-150); border-radius:10px; box-shadow:0 1px 3px rgba(9,18,30,.07); }
-.snapshot > div { min-width:0; padding:19px; background:var(--paper); }
-.snapshot h2 { margin:0 0 8px; color:var(--ink-900); font:400 25px/1.1 var(--serif); letter-spacing:-.02em; }
-.snapshot p { margin:0; font-size:13px; line-height:1.5; color:var(--ink-600); }
-.metric { border-top:3px solid var(--iris-500); }
-.metric:nth-child(3) { border-top-color:var(--jade-700); }
-.metric:nth-child(4) { border-top-color:var(--gold-600); }
-.metric strong { display:block; margin-bottom:5px; color:var(--ink-900); font:600 22px/1 var(--mono); letter-spacing:-.06em; }
-.metric span { font-size:11px; color:var(--ink-500); text-transform:uppercase; letter-spacing:.08em; }
-.notice { margin:0 0 38px; padding:15px 17px; border:1px solid var(--jade-200); border-left:4px solid #168566; border-radius:7px; background:var(--jade-50); color:var(--jade-700); font-size:13px; }
-.notice strong { font-weight:700; }
-.source { max-width:1000px; }
-.source > h1 { display:none; }
-.source h2 { scroll-margin-top:24px; margin:58px 0 20px; padding-bottom:10px; border-bottom:1px solid var(--ink-150); color:var(--ink-900); font:400 clamp(26px,3.2vw,38px)/1.12 var(--serif); letter-spacing:-.025em; }
-.record-section { margin:18px 0; border:1px solid var(--ink-150); border-radius:9px; background:var(--paper); box-shadow:0 1px 2px rgba(9,18,30,.04); }
-.record-section > summary { display:flex; align-items:center; gap:18px; padding:19px 21px; cursor:pointer; list-style:none; }
-.record-section > summary::-webkit-details-marker { display:none; }
-.record-section > summary::after { content:'+'; margin-left:auto; color:var(--iris-500); font:400 27px/1 var(--serif); }
-.record-section[open] > summary { border-bottom:1px solid var(--ink-150); background:var(--ink-50); }
-.record-section[open] > summary::after { content:'−'; }
-.record-section > summary h2 { margin:0; padding:0; border:0; font-size:clamp(22px,2.3vw,30px); }
-.section-count { flex:none; color:var(--ink-500); font:600 11px/1.3 var(--mono); letter-spacing:.06em; text-transform:uppercase; }
-.record-section-body { padding:0 22px 26px; }
-.source h3 { scroll-margin-top:24px; margin:42px 0 13px; color:var(--ink-900); font:600 19px/1.27 var(--sans); letter-spacing:-.015em; }
-.source h4 { margin:30px 0 10px; color:var(--ink-700); font:600 15px/1.3 var(--sans); }
-.source p { max-width:82ch; margin:0 0 17px; }
-.source strong { color:var(--ink-900); }
-.source em { color:var(--ink-600); }
-.source ul, .source ol { max-width:84ch; margin:0 0 20px; padding-left:25px; }
-.source li { margin:7px 0; padding-left:3px; }
-.source blockquote { max-width:82ch; margin:22px 0; padding:3px 0 3px 19px; border-left:3px solid var(--iris-500); color:var(--ink-600); }
-.table-wrap { overflow-x:auto; margin:24px 0 28px; border:1px solid var(--paper-line); border-radius:8px; background:var(--paper); box-shadow:0 1px 2px rgba(9,18,30,.05); }
-table { width:100%; min-width:620px; border-collapse:collapse; font-size:13px; line-height:1.45; }
-th, td { padding:11px 13px; vertical-align:top; text-align:left; border-bottom:1px solid var(--ink-150); }
-th { position:sticky; top:0; background:var(--ink-50); color:var(--ink-700); font:600 10px/1.3 var(--mono); letter-spacing:.06em; text-transform:uppercase; }
-tr:last-child td { border-bottom:0; }
-td:first-child { color:var(--ink-900); font-weight:600; }
-hr { border:0; border-top:1px solid var(--ink-150); margin:42px 0; }
-.source code { padding:.1em .32em; border-radius:3px; background:var(--ink-100); color:var(--ink-800); font:.88em var(--mono); }
-.source pre { overflow:auto; padding:14px; border-radius:7px; background:var(--ink-900); color:var(--ink-50); }
-.source pre code { padding:0; background:transparent; color:inherit; }
-footer { max-width:1000px; margin-top:68px; padding-top:20px; border-top:1px solid var(--ink-150); color:var(--ink-500); font-size:12px; }
-@media (max-width: 900px) { .board { display:block; } .nav { position:static; height:auto; padding:16px max(22px,5vw); border-right:0; border-bottom:1px solid var(--ink-150); display:flex; overflow-x:auto; gap:4px; } .nav-label { display:none; } .nav a { white-space:nowrap; flex:none; border-left:0; border-bottom:2px solid transparent; } .nav a:hover { border-left-color:transparent; border-bottom-color:var(--iris-500); } .snapshot { grid-template-columns:1fr 1fr; } .snapshot > div:first-child { grid-column:1/-1; } }
-@media (max-width: 560px) { body { font-size:14px; } .masthead { padding-top:20px; padding-bottom:24px; } .masthead p { font-size:14px; } .content { padding-top:22px; } .snapshot { display:block; } .snapshot > div { border-bottom:1px solid var(--ink-150); } .snapshot > div:last-child { border-bottom:0; } table { font-size:12px; } th,td { padding:9px 10px; } }
-@media print { body { background:#fff; } .masthead { background:#fff; color:var(--ink-900); border-bottom:1px solid var(--ink-300); } .masthead p,.brandline { color:var(--ink-600); } .perimeter { filter:invert(1); } .nav { display:none; } .board { display:block; } .content { padding:20px 0; } .snapshot { break-inside:avoid; } .record-section { border:0; box-shadow:none; } .record-section > summary { padding:0; } .record-section > summary::after { display:none; } .record-section-body { padding:0; } .source h2 { break-after:avoid; } .source h3 { break-after:avoid; } .table-wrap { overflow:visible; } }
+:root { --ink:#172333; --muted:#5b6b7d; --paper:#fff; --ground:#f2f5f7; --line:#d9e0e7; --navy:#09243c; --blue:#176184; --teal:#0a7258; --gold:#866019; --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; --serif:Newsreader,Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace; }
+* { box-sizing:border-box; } html { scroll-behavior:smooth; background:var(--ground); } body { margin:0; color:var(--ink); background:var(--ground); font:16px/1.62 var(--sans); } a { color:var(--blue); text-underline-offset:3px; } a:focus-visible { outline:3px solid #4d90ad; outline-offset:3px; border-radius:3px; }
+.masthead { color:#f8fbfc; background:var(--navy); border-bottom:4px solid var(--blue); padding:32px max(24px,calc((100vw - 1180px)/2)); }.kicker { margin:0 0 18px; color:#b8cad5; font:11px/1.2 var(--mono); letter-spacing:.13em; text-transform:uppercase; }.masthead h1 { max-width:900px; margin:0 0 10px; font:400 clamp(36px,5vw,62px)/1 var(--serif); letter-spacing:-.04em; }.masthead p { max-width:770px; margin:0; color:#c8d5dd; font-size:17px; }.masthead a { color:#fff; }
+.layout { display:grid; grid-template-columns:220px minmax(0,920px); gap:0; max-width:1180px; margin:0 auto; }.nav { position:sticky; top:0; align-self:start; max-height:100vh; overflow:auto; padding:28px 18px 36px; }.nav strong { display:block; margin-bottom:9px; color:var(--muted); font:10px/1.3 var(--mono); letter-spacing:.12em; text-transform:uppercase; }.nav a { display:block; padding:6px 8px; border-left:2px solid transparent; color:var(--muted); font-size:13px; text-decoration:none; }.nav a:hover { border-left-color:var(--blue); background:#e4eff4; color:var(--navy); }
+main { min-width:0; padding:34px clamp(24px,5vw,68px) 86px; background:var(--paper); }.summary { display:grid; grid-template-columns:minmax(0,1.35fr) repeat(2,minmax(128px,.55fr)); overflow:hidden; margin:0 0 30px; border:1px solid var(--line); border-radius:10px; background:var(--line); box-shadow:0 1px 3px #09243c12; }.summary > div { min-width:0; padding:19px; background:var(--paper); }.summary p { margin:0; color:var(--muted); font-size:13px; line-height:1.5; }.summary h2 { margin:0 0 8px; font:400 26px/1.08 var(--serif); letter-spacing:-.02em; }.metric { border-top:3px solid var(--blue); }.metric:nth-child(3) { border-top-color:var(--teal); }.metric strong { display:block; margin-bottom:6px; font:600 24px/1 var(--mono); letter-spacing:-.07em; }.metric span { color:var(--muted); font:10px/1.3 var(--mono); letter-spacing:.08em; text-transform:uppercase; }.notice { margin:0 0 35px; padding:14px 17px; border:1px solid #a9dfd0; border-left:4px solid var(--teal); border-radius:7px; background:#eef9f5; color:#07503e; font-size:13px; }
+.brief { max-width:820px; }.brief h2 { scroll-margin-top:22px; margin:52px 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line); color:var(--navy); font:400 clamp(29px,3.6vw,42px)/1.1 var(--serif); letter-spacing:-.03em; }.brief h2:first-child { margin-top:0; }.brief p { margin:0 0 18px; }.brief strong { color:#0c263b; }.brief ol { margin:0 0 22px; padding-left:24px; }.brief li { margin:8px 0; padding-left:3px; }.brief code { padding:.1em .32em; border-radius:3px; background:#eaf0f4; font:.88em var(--mono); } footer { max-width:820px; margin-top:60px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+@media (max-width:860px) { .layout { display:block; }.nav { position:static; display:flex; gap:4px; max-height:none; overflow:auto; padding:16px max(24px,5vw); border-bottom:1px solid var(--line); background:#f9fafb; }.nav strong { display:none; }.nav a { flex:none; white-space:nowrap; border-left:0; border-bottom:2px solid transparent; }.nav a:hover { border-left:0; border-bottom-color:var(--blue); }.summary { grid-template-columns:1fr 1fr; }.summary > div:first-child { grid-column:1/-1; } } @media (max-width:520px) { body { font-size:15px; }.masthead { padding-top:24px; }.masthead p { font-size:15px; }.summary { display:block; }.summary > div { border-bottom:1px solid var(--line); }.summary > div:last-child { border:0; } main { padding-top:26px; } } @media print { body,main { background:#fff; }.masthead { color:var(--ink); background:#fff; border-bottom:1px solid var(--line); }.masthead p,.kicker { color:var(--muted); }.masthead a { color:var(--blue); }.nav { display:none; }.layout { display:block; }.brief h2 { break-after:avoid; } }
 </style>
 </head>
 <body>
-<div class="shell">
-<header class="masthead">
-  <div class="brandline"><span class="perimeter" aria-hidden="true"></span> AWA / pilot MVP / decision record</div>
-  <h1>Pilot MVP decisions</h1>
-  <p>A concise, standalone board for the canonical decision record. The full source is retained unchanged behind expandable sections.</p>
-</header>
-<div class="board">
-<nav class="nav" aria-label="Decision record sections">
-  <p class="nav-label">Jump to</p>
-  <a href="#snapshot">Decision snapshot</a>
-  <a href="#0-context-and-vocabulary">0. Context &amp; vocabulary</a>
-  <a href="#1-pilot-contract-and-acceptance">1. Pilot contract</a>
-  <a href="#2-governance-and-runtime-foundations">2. Foundations</a>
-  <a href="#3-core-work-loop--from-governed-answer-to-outward-delivery">3. Core work loop</a>
-  <a href="#4-shared-artifact-and-flow-contracts">4. Shared contracts</a>
-  <a href="#5-compounding-loop--capture-run-and-improve-a-method">5. Compounding loop</a>
-  <a href="#6-out-of-the-mvp">6. Out of MVP</a>
-  <a href="#7-open-questions">7. Open questions</a>
-</nav>
-<main class="content">
-  <section id="snapshot" aria-labelledby="snapshot-title">
-    <div class="snapshot">
-      <div><p class="eyebrow">Read this first</p><h2 id="snapshot-title">The pilot is a learning instrument, not a proof exercise.</h2><p>One entity, one recurring workflow, named real users, and a dedicated owner. The three-week clock begins only when real work begins; it ends in an explicit expand, revise, or stop decision.</p></div>
-      <div class="metric"><strong>3 weeks</strong><span>Three one-week iterations</span></div>
-      <div class="metric"><strong>30</strong><span>Decisions D1–D30</span></div>
-      <div class="metric"><strong>6</strong><span>Open questions</span></div>
-    </div>
-    <aside class="notice"><strong>Pilot one status — 2026-08-03:</strong> Tasco’s Tax/Accounting/Finance department is confirmed. The operating entity, a weekly-or-more-frequent workflow, sponsor, and dedicated owner remain unnamed and block the start.</aside>
-  </section>
-  <article class="source">
-<h1 id="pilot-mvp--decisions">Pilot MVP — decisions</h1>
-<h2 id="0-context-and-vocabulary">0. Context and vocabulary</h2>
-<h3 id="01-context">0.1 Context</h3>
-<p><strong>Document role.</strong> The single authority for AWA's pilot MVP: what was chosen, why, and what is still open. Specs, user stories, and prospect-facing material are written from it; it cites nothing outside itself. A spec that contradicts a decision is wrong, and a decision the team stops following is edited rather than left standing.</p>
-<p><strong>Decision order.</strong> Decisions run from broad pilot constraints toward downstream product choices, and earlier ones generally constrain later ones. Numbering does not make any active decision optional or resolve a conflict. Decisions state behaviour, not implementation. This is a decision record, not a delivery plan.</p>
-<p><strong>Standing constraint.</strong> Pilot one is confirmed as of 2026-08-03: Tasco, in the Tax/Accounting/Finance department. Pilots two and three are not. Every decision here must still hold <strong>regardless of which pilot lands</strong>, so a choice that only makes sense for one sponsor does not belong. Where pilot one's confirmed shape now bears on a decision, that decision records it under a dated <strong>Pilot one</strong> note and says what remains unnamed. Three things are unnamed and block the start: the operating entity inside Tasco (D8), the workflow (D2), and the sponsor and dedicated owner.</p>
-<p><strong>Business context.</strong> A company's know-how layer is the accumulated method that makes a recurring job come out right, and it leaves when the person leaves. AWA captures that method inside the customer's own governed material and keeps it theirs. This is not a data-residency product. Retrieval is the lower bar to clear; captured flows are the ongoing objective. A pilot that proves retrieval but captures no method has demonstrated a search box.</p>
-<p><strong>Engineering context.</strong> The pilot MVP is a <strong>rebuild</strong>. The current FastAPI application stays as the stable demo surface for sales, and what exists in it is neither a constraint on these decisions nor a credit against them: present there does not make it done here, absent there does not make it expensive here.</p>
-<p><strong>Why rebuild rather than increment.</strong> The repository state behind the demo is too disordered to serve as the source of truth for delivery, and the demo showed a roughly seventy-second unexplained pause, application and database both awake, that was never diagnosed. Neither argues against building a governed, concurrent, multi-user system. Both argue against building it on a foundation nobody can reason about.</p>
-<p><strong>How the pieces relate.</strong></p>
-<ul>
-<li>A pilot is the smallest thing that produces a real decision: one entity, one recurring workflow, one dedicated owner. Deliberately not a group-wide rollout.</li>
-<li>Access provisioning, sandbox setup, and corpus loading are <strong>pre-pilot</strong>. The clock starts when a real user does real work, not when the environment is ready.</li>
-<li>Demo and pilot run the same product. There is no customer-specific build, so what a pilot user asks for decides the roadmap rather than forking the code.</li>
-<li>A pilot's evidence is what the users did and said, not a screenshot, a test pass, or a delivery tally.</li>
-<li>At most three early pilots at once: two in Vietnam, ideally one elsewhere in Southeast Asia. The three-person team stays directly involved in each, so the cap is attention, not demand.</li>
-</ul>
-<h3 id="02-vocabulary">0.2 Vocabulary</h3>
-<p>These entries fix the words and the boundaries between them. Where a term has a decision of its own, the decision carries the detail and is cited here rather than restated.</p>
-<p><strong>Pilot</strong>: A bounded engagement in which named real users at a customer do their <strong>own recurring work</strong> on <strong>their own documents</strong> and return structured feedback. It begins only when all four entry conditions hold at once, and ends on a stated date with an explicit expand, revise, or stop decision. A pilot is a learning instrument first: it establishes how these users actually work, which capabilities matter, and whether the partner is worth continuing with. Producing a favourable result is not its purpose. <em>Avoid</em>: trial, proof of concept, evaluation, rollout, deployment, engagement</p>
-<p><strong>Demo</strong>: Anything shown over a seeded synthetic corpus with pre-assigned classifications and prepared personas, whether presented live, recorded as video, or clicked through. A demo proves implemented behaviour. It cannot establish adoption, task completion, or fitness, because none of its data, users, or work is real. <em>Avoid</em>: live pilot, pilot demo, mini-pilot, trial run</p>
-<p><strong>The four entry conditions</strong>: The gates that separate a demo from a pilot. Each is binary, and a pilot that is missing one is a demo being called a pilot.</p>
-<ol type="1">
-<li><strong>Real users</strong> — named individuals who already do the work, not evaluators, not IT, not a procurement committee.</li>
-<li><strong>Real documents</strong> — the customer's own material. Curated and read-only still counts as real. Synthetic does not.</li>
-<li><strong>Real work</strong> — a job the user was already going to do this week and is accountable for, not an exercise invented to test the product.</li>
-<li><strong>A feedback loop</strong> — an agreed channel and cadence by which what the users do returns to the team and changes the product. <em>Avoid</em>: treating access provisioning, a sandbox, or a signed document as the start of the pilot</li>
-</ol>
-<p><strong>Dedicated owner</strong>: One named person at the customer who is our interface for the pilot and coordinates their side. The pilot does not start without one. Whatever internal authority they need to approve documents, users, and deployment is theirs to arrange, and is not modelled in the product. <em>Avoid</em>: an assumed remit, a contact who cannot convene the users, authority inferred from a title</p>
-<p><strong>Exit decision</strong>: A stated expand, revise, or stop decision made on the pilot's final day, on the evidence the pilot produced. The end date is fixed before the start date. A pilot without a scheduled exit decision becomes an indefinite evaluation. <em>Avoid</em>: rolling engagement, open-ended evaluation, extension by default, "let's see how it goes"</p>
-<p><strong>Baseline</strong>: Three to five completed real examples of the chosen workflow, reviewed before the pilot starts. It exists so improvement is measured against what the team actually did last month, rather than against an estimate made after the fact. <em>Avoid</em>: a projected saving, a business case, a benchmark, a stated return</p>
-<p><strong>Iteration</strong>: One of the three one-week cycles inside the fixed three-week pilot window: real use, then feedback collection, then a product change shipped into the live pilot. The product inside it is expected to change (D1). <em>Avoid</em>: sprint, phase, milestone, release train</p>
-<p><strong>Pre-pilot onboarding</strong>: Everything AWA does before the clock starts: user interviews, corpus collection, document ingestion, and permission scoping. It is operated by the AWA team by hand, not by the customer through a console. It is deliberately unscalable, and it exists so the first pilot users never meet an administrator surface (D6). <em>Avoid</em>: setup phase, implementation, configuration, self-service onboarding</p>
-<p><strong>Artifact</strong>: A document the product produced and one user owns: promoted from a chat answer or produced by a Flow run, then edited directly. It is the unit shared, exported, and delivered. Its editing, sharing, and versioning contracts are D15, D20, and D21. <em>Avoid</em>: output, deliverable, report, file, document</p>
-<p><strong>Flow</strong>: A saved method created from a chat session that already produced acceptable work. The user improves it by attaching instructions to fixed phases rather than authoring a workflow. It runs in the background, re-retrieves against the invoker's current access on every run, and produces an Artifact (D23, D24, D28). <em>Avoid</em>: workflow, automation, template, pipeline, playbook</p>
-<p><strong>Phase spine</strong>: The four phases every run renders as: Gather, Reason, Produce, Check. They are fixed by the product and identical for every Flow. The sub-actions inside a phase vary run to run and are display only. Instructions attach to phases, never to sub-actions (D25). <em>Avoid</em>: step, node, stage, task, DAG</p>
-<p><strong>Personal space</strong>: A per-user area where a pilot user keeps documents they brought themselves. It is the one place in the product where a user adds material without an administrator or assigns a classification, and its contents are owner-only and unshareable (D7). Artifacts do not live here: personal is a document classification, and an Artifact is a separate object with its own lifecycle. <em>Avoid</em>: private folder, my drive, workspace, sandbox, personal knowledge base</p>
-<p><strong>Outward delivery</strong>: Taking a finished Artifact out of AWA to a recipient who is not an AWA user. AWA renders a file and the user delivers it (D13). It exists because the output of a real recurring job is owed to somebody outside the pilot cohort, and a user who cannot send it will screenshot it. It is in pilot scope and was explicitly <strong>not</strong> in demo scope. <strong>Export</strong> is the narrower word for the act AWA performs and records: rendering the file, and the record naming user, Artifact, version, time, and source classifications (D4, D13). Outward delivery is the whole move, including the part AWA cannot see. <em>Avoid</em>: download, sync, integration, publish</p>
-<p><strong>Rendered citation</strong>: What an inline citation becomes when it leaves AWA and can no longer be clicked: the marker stays beside the claim and a source list names each document and its printed locator (D18). A live link back into AWA is not an option, because the recipient has no account and a dead link reads worse than no link. <em>Avoid</em>: link back to AWA, "see AWA for sources", footnote-free export, source-count summary</p>
-<p><strong>AWA-operated permission scoping</strong>: AWA interviews users, collects and ingests the corpus, and proposes each document's classification and owning department for pilots one through three; the customer approves the per-document proposal before first sign-in (D6). This keeps onboarding from waiting on a customer-authored policy while leaving the consequence of a wrong entitlement with an explicit customer-approved decision. <em>Avoid</em>: inherited permissions, mirrored file-share ACLs, customer-authored policy (not yet true), self-serve classification</p>
-<h2 id="1-pilot-contract-and-acceptance">1. Pilot contract and acceptance</h2>
-<h3 id="d1-fixed-three-week-window-three-one-week-iterations-mutable-product">D1. Fixed three-week window, three one-week iterations, mutable product</h3>
-<p>The window and the exit decision are fixed before the start. The product inside the window is not. Each week is real use, then feedback, then a shipped change.</p>
-<p><strong>Why:</strong> A fixed end date is what forces a decision. A frozen product wastes the only thing a first pilot uniquely produces, which is watching a real user hit a wall while there is still time to fix it. Three iterations rather than two gives a change shipped in week one a chance to be judged in week three.</p>
-<p><strong>Consequences, each of which is a day-one requirement:</strong></p>
-<ul>
-<li>Deployment must not disrupt a live user. No data loss, no forced re-login, no broken in-flight Artifact or Flow. We ship into a live pilot at least twice.</li>
-<li>Work created in week one must still open in week three, across schema changes.</li>
-<li>The baseline is captured before the clock starts. A mutable product makes it impossible to reconstruct afterwards what a user was reacting to.</li>
-<li>What an Artifact is, what a Flow is, and what a citation points at are frozen for the window. How they look and how well they work are not. Changing the contract mid-pilot invalidates the user's accumulated work and the pilot's own evidence.</li>
-</ul>
-<h3 id="d2-the-chosen-workflow-must-run-weekly-or-more-often">D2. The chosen workflow must run weekly or more often</h3>
-<p>The window can only observe what completes inside it. Three one-week iterations observe three cycles of a weekly job and zero complete cycles of a monthly or quarterly one. This is a selection rule that binds before a customer is named, so it belongs to the pilot definition rather than to any customer.</p>
-<p><strong>Consequence:</strong> The worked examples used so far are a quarterly revenue snapshot and a quarterly variance summary. Neither can be the pilot workflow. Candidate qualification must ask for cadence early, and a prospect whose only recurring pain is quarterly is not a first pilot.</p>
-<p><strong>Pilot one (2026-08-03).</strong> The department is confirmed and the workflow is not. Choosing one that runs weekly or more often is a blocking pre-pilot item, and it is the live risk in a Tax/Accounting/Finance department, where the headline cycles are monthly close and quarterly filing. Either completes zero times inside a three-week window. Weekly candidates worth testing first are a cash position, an AR or AP aging review, and a payment run. If no weekly workflow exists in this department, the choice is a different workflow or a different first cohort, not a longer window (D1).</p>
-<h3 id="d3-the-cohort-is-hierarchical-one-executive-over-at-least-two-peer-units-each-with-a-manager-and-workers">D3. The cohort is hierarchical: one executive over at least two peer units, each with a manager and workers</h3>
-<p>Everyone in the cohort does real work, so everyone is a producer. The executive sees activity and shared or exported Flows and Artifacts across the whole cohort, but never private drafts or personal uploads. A manager has the same oversight only within their own unit. Two peer units is the minimum, not a target (D9).</p>
-<p><strong>Pilot one (2026-08-03).</strong> The cohort sits inside one department, Tax/Accounting/Finance, which contains three teams. Those teams are the peer units, so the product's departmental axis binds on a team here rather than on the department above them (D10). The intended size is roughly nine to ten people: one executive, plus a manager and two or three workers per team. The exact roster, and which person holds the executive level, are fixed during pre-pilot onboarding (D6).</p>
-<p><strong>Why the cohort is hierarchical rather than flat:</strong></p>
-<ul>
-<li><strong>More than one peer unit is load-bearing.</strong> A single-unit cohort gives everyone identical entitlement. No perimeter ever differs between two people, no query resolves differently, and the pilot produces zero evidence about the differentiator. Three teams make the permission boundary an observed fact rather than an untested configuration.</li>
-<li><strong>Hierarchy is the actual argument.</strong> The pitch is that long governance chains turn a question into a queue. A cohort with an executive, managers, and workers is the structure that claim is about.</li>
-<li><strong>The cohort contains its own readers.</strong> Every loop ends with someone else reading the output. Managers and the executive receive as well as produce, so that half of the loop is real rather than simulated.</li>
-<li><strong>The executive is the exit decision.</strong> A sponsor who watched it work firsthand decides on evidence rather than on a report about evidence.</li>
-</ul>
-<p><strong>Costs to accept, not overlook:</strong> interviewing every producer during each of the three one-week iterations is roughly five hours plus synthesis every week for a three-person team. AWA also hand-onboards every person and their documents before the pilot. Two or three workers per unit rather than four is what keeps this tight (D1, D6).</p>
-<p><strong>Actors for user stories:</strong> the product models workers, managers, and executives as the cohort's three levels. Their level and department determine retrieval and oversight scope (D10).</p>
-<h3 id="d4-the-exit-decision-rests-on-task-completion-effort-to-export-as-a-trend-and-disclosure-incidents">D4. The exit decision rests on task completion, effort-to-export as a trend, and disclosure incidents</h3>
-<p><strong>Task completion is the primary measure.</strong> Did the user finish their real recurring job inside AWA? Binary, per cycle, per person, and unambiguous. One observation per producer per cycle, so a cohort of nine or ten over three cycles yields twenty-seven to thirty observations (D3).</p>
-<p><strong>Effort-to-export is the quality measure, and it is read as a trend.</strong> Time invested in chat and in correcting a Flow is expected and healthy. What must shrink is the work between generation and sending: manual editing and rerunning. The product can turn one user correction into a candidate phase instruction, but adopts it only after the user confirms it (D27). If that capture works, cycle one shows heavy editing while the user teaches the Flow and cycle three shows almost none. The criterion is whether that time declines across cycles one, two, and three. Flat means a one-shot generator; declining is the compounding claim, measured. Averaging across the window hides the only thing worth seeing.</p>
-<p><strong>Export is the satisfaction signal.</strong> A costly, voluntary act in which the user puts their name on the output and sends it outside the cohort. It beats any survey question. Counted per completed cycle rather than raw, since job frequency varies by person and work that legitimately stays inside the cohort never exports.</p>
-<p><strong>A wrong disclosure is raised and debugged, not an automatic stop.</strong> Any instance where a user saw material their perimeter should not have returned is investigated immediately, its cause identified, and the finding carried into the exit decision. It ranks engineering priority above everything else. A scoping error in the classification that AWA proposed and the customer approved, and an enforcement failure against that approved classification, are different findings. Only the second is evidence about the product's authorization behavior (D6). A disclosure is only detectable if a human notices and has somewhere to say so, so the product owes users a way to report one. Without that channel, zero disclosures is the absence of evidence rather than evidence.</p>
-<p><strong>Two distinctions the raw numbers get wrong:</strong></p>
-<ul>
-<li>A rerun <em>after an instruction was attached</em> is the product learning. A rerun with <strong>no change</strong> is the user hoping for better luck, and only that second kind is a failure signal.</li>
-<li>Editing because the output was wrong is a failure. Editing to add judgement only the human holds is correct behaviour. Driving edits to zero would mean replacing judgement rather than supporting it.</li>
-</ul>
-<p><strong>Not measured: a time-saving percentage.</strong> Self-reported timings over three cycles against a mutable product with an observed cohort are noise dressed as data, and a soft number a CFO can challenge makes everything beside it look soft. What the pilot produces is a decision with evidence behind it, not a business case. The baseline supports a qualitative comparison, not a percentage.</p>
-<p><strong>What these measures require the product to record:</strong> Artifact content at generation and at export, so the two can be diffed; timestamps for generation, each edit session, and export; which Flow version ran and whether its instructions changed since the previous run; an export that is distinguishable from a share; and an export record naming the user, Artifact and version, time, and source classifications (D13).</p>
-<h3 id="d5-two-stacked-loops-the-core-work-loop-must-clear-the-compounding-loop-must-work-at-least-partially">D5. Two stacked loops: the core work loop must clear; the compounding loop must work at least partially</h3>
-<p><strong>The core work loop:</strong> ask in chat, get a cited answer, promote it to an Artifact, edit it, export it. No Flow involved. A user can complete their whole weekly job this way on day one. This is the lower bar and it has to be cleared.</p>
-<p>The core work loop's day-one acceptance bar includes permission-governed retrieval rather than treating authorization as a feature layered on later. Permission handling is both the differentiator and the enterprise adoption gate, so strong retrieval without working authorization cannot support enterprise work at all. Every retrieval must apply the user's level and department against the document's classification and owning department; that matrix is not tradeable (D10).</p>
-<p><strong>The compounding loop:</strong> notice the repetition, save that chat as a Flow, run it in the background, attach instructions where it was wrong, get a better run next time. It must work at least partially within the window.</p>
-<p><strong>Why the core work loop must precede the compounding loop:</strong> nobody saves a method before doing the job once and having it work. A Flow can be created only from a chat session that already produced acceptable work, so the working chat session is a precondition for the entire compounding loop (D28).</p>
-<p><strong>Why the loop order matches the evidence design:</strong> the pilot measures whether editing and rerunning between Artifact generation and outward delivery decline across three cycles (D4). Cycle one is expected to be mostly the core work loop, with heavy editing. Cycle two is where a Flow gets saved. By cycle three the Flow carries most of it and editing drops. The declining curve <em>is</em> the user moving from the core work loop into the compounding loop. A shaky core work loop means cycle one fails and there is never a cycle three.</p>
-<p>Build the core work loop before the compounding loop.</p>
-<h2 id="2-governance-and-runtime-foundations">2. Governance and runtime foundations</h2>
-<h3 id="d6-awa-operates-ingestion-and-permission-scoping-by-hand-during-pre-pilot-onboarding">D6. AWA operates ingestion and permission scoping by hand during pre-pilot onboarding</h3>
-<p>Users are interviewed first, then onboarded manually. The AWA team collects the corpus, ingests it, and proposes classification and department attribution. The customer approves the proposal before the first sign-in.</p>
-<p><strong>Why:</strong> AWA-operated ingestion and permission scoping removes the largest onboarding blocker, which is a customer writing a classification policy before they have seen any value. Manual onboarding also lets the team learn what the classification rules need to be, which cannot be learned from a synthetic corpus.</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li>No customer-facing administrator console is required in the pilot MVP. Ingestion and classification are operated by the AWA team through internal means the pilot users never see.</li>
-<li><strong>Approval is a checkable artifact.</strong> The customer signs off a per-document classification and owning-department list before the first sign-in. AWA proposes, the customer approves, and a wrong entitlement is then traceable to an approved decision rather than to an AWA guess. It costs onboarding time, and it makes a reported disclosure traceable to either approved scoping or product enforcement rather than leaving its cause to argument (D4).</li>
-<li><strong>The customer-authorship differentiator is not live in pilots one through three.</strong> AWA's stated differentiator is entitling on a classification the customer authors, inheriting nothing. Here AWA authors it. The differentiator stays true of the product and is not true of these pilots. Do not present AWA-operated scoping as the permanent operating model, and do not claim customer authorship as a live differentiator until a customer has authored one.</li>
-<li>AWA-operated ingestion and classification does not scale past pilot three, and that is accepted rather than overlooked.</li>
-</ul>
-<h3 id="d7-a-user-may-upload-documents-into-a-personal-space-and-nowhere-else">D7. A user may upload documents into a personal space, and nowhere else</h3>
-<p>Uploaded documents are retrievable only by the uploader. They never enter the shared perimeter, and the user never assigns a classification.</p>
-<p><strong>Why:</strong> The recurring job usually involves a file the user has in hand that is not in the curated corpus. Without it the pilot measures half a loop and cannot explain why. Letting a user publish into the shared corpus would reverse AWA-operated, customer-approved permission scoping and put entitlement authorship back in the uploader's hands (D6).</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li>Personal is a distinct classification. Material carrying it is retrievable by its owner alone and is never eligible for the administrator ingestion path.</li>
-<li><strong>A personal document cannot be shared.</strong> Owner-alone access is absolute, and no role or level reaches it. The user may instead share an <em>Artifact</em> derived from that material with a named person, granting view or edit while leaving comment and copy available (D17, D20). Sharing the source would let the uploader make a classification decision, which AWA-operated scoping exists to prevent (D6).</li>
-<li>File format support becomes a real requirement: native-text PDF, DOCX, XLSX, TXT and Markdown.</li>
-<li><strong>No OCR of scanned documents at MVP.</strong> Scanned material is identified and excluded during pre-pilot onboarding, where it can be seen coming, rather than failing in front of a user in week two. The honest position is that the gap is ingesting Vietnamese paperwork, not understanding Vietnamese.</li>
-</ul>
-<h3 id="d8-one-deployment-and-one-database-per-pilot-customer">D8. One deployment and one database per pilot customer</h3>
-<p>Isolation is an infrastructure property, not a code property. Up to three concurrent pilots means up to three instances of the same image.</p>
-<p><strong>Why:</strong> Isolating each customer in a separate deployment and database gives a security reviewer a one-sentence answer instead of an audit of every query, and makes per-customer deployment location literally true rather than a claim to walk back. The infrastructure boundary also subtracts a whole category of requirement from the MVP: no org-scoping on every query, no cross-tenant leak tests, no tenant-aware caching. The prior build modelled tenant separation in code and never ran it with more than one tenant; designed and unproven is not working, and an infrastructure boundary needs no proof.</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li>The organization identifier stays in the model even though it is not the isolation boundary. Threading tenancy in afterwards is the expensive version, and a customer with two entities in one deployment will need it.</li>
-<li>A deploy script must reach every live instance because the mutable three-week pilot ships at least two changes without disrupting users or their work (D1).</li>
-<li><strong>One shared product does not mean one shared deployment.</strong> The scale argument is that there is no customer-specific <em>version</em>. Same image, same interface, different instance. Expect this to be conflated and state it explicitly in prospect-facing material.</li>
-<li><strong>A stated limit.</strong> One entity per deployment means the pilot demonstrates the departmental and level axes of governance, not the multi-entity one. Do not claim pilot evidence for the group-wide story. Pilot one is confirmed with Tasco, but the operating entity inside Tasco is not yet named, and naming it is what fixes the deployment boundary (2026-08-03).</li>
-</ul>
-<p><strong>What any substrate has to carry.</strong> The host, database, model provider, and storage remain open, but the isolation and operating outcomes do not. Any substrate must provide a separate instance and database per customer, a deploy that reaches every live instance, sessions that survive that deploy, and a deployment region that can be named per customer. Per-customer location must remain a literal property rather than a claim to walk back.</p>
-<h3 id="d9-oversight-sees-activity-and-shared-work-never-private-drafts-or-personal-uploads">D9. Oversight sees activity and shared work, never private drafts or personal uploads</h3>
-<p>Whoever holds oversight can see who ran what and how often, every Artifact and Flow that was shared or exported, and the access and export record. Unshared drafts and personal-space uploads are not visible to anyone but their owner. <strong>Users are told this on day one.</strong></p>
-<p>Oversight follows the role hierarchy: a manager sees activity and shared or exported work for their own department, while the executive sees the same information organization-wide. Neither level can see unshared drafts or personal uploads (D10).</p>
-<p><strong>Why:</strong> The three things a sponsor needs in three weeks are whether anyone is using it, whether the output is any good, and whether anything is leaking. Activity answers the first, shared work the second, the export record the third. None of them requires reading a half-finished draft.</p>
-<p><strong>Why the exclusion is not squeamishness:</strong> personal space lets a user bring a working file without assigning a classification, while keeping that source owner-only and unshareable (D7). If an executive reads that space, the personal space is a lie, users keep the messy file on their desktop, half the job happens outside AWA, and the pilot loses the observation it exists for. People do not experiment honestly under observation, and a pilot is a learning instrument first.</p>
-<p><strong>Why AWA states the boundary rather than leaving it implicit:</strong> discovering covert observation in week two ends the pilot's credibility and probably the relationship. It is a scripted disclosure during manual pre-pilot onboarding, not a product surface (D6).</p>
-<h3 id="d10-three-roles-worker-manager-executive-oversight-scope-widens-with-level">D10. Three roles: worker, manager, executive. Oversight scope widens with level</h3>
-<p>Every user carries a <strong>department</strong>. Their <strong>role</strong> determines two things and nothing else: how far their view of other people's shared work reaches, and whether they may read restricted material.</p>
-<p><strong>Entitlement is a matrix, not a ladder.</strong> A document carries a <strong>classification</strong> and an <strong>owning department</strong>. A user carries a <strong>level</strong> and a <strong>department</strong>. Access is the intersection of the two.</p>
-<p><strong>"Department" is the product's name for the customer's smallest owning unit, whatever the customer calls it.</strong> At pilot one that unit is a team inside the Tax/Accounting/Finance department, so the three teams are three departments in the product's sense (D3). The product term and the matrix below do not change; what they bind to is set during pre-pilot scoping (D6). Expect this to be conflated in a customer conversation, where "department" means the level above.</p>
-<p>Five classifications. Three of them map onto the three levels, with public sitting underneath as an ungated floor and personal sitting outside the matrix as an owner-only, unshareable classification (D7):</p>
-<table>
-<thead>
-<tr>
-<th>Classification</th>
-<th>Department scoped</th>
-<th>Level required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Public</strong></td>
-<td>No</td>
-<td>None. Every authenticated user</td>
-</tr>
-<tr>
-<td><strong>Internal</strong></td>
-<td><strong>Yes</strong></td>
-<td>Worker</td>
-</tr>
-<tr>
-<td><strong>Confidential</strong></td>
-<td>Yes</td>
-<td>Manager</td>
-</tr>
-<tr>
-<td><strong>Restricted</strong></td>
-<td>No, organization-wide</td>
-<td>Executive</td>
-</tr>
-<tr>
-<td><strong>Personal</strong></td>
-<td>n/a</td>
-<td>Owner alone; never shareable</td>
-</tr>
-</tbody>
-</table>
-<p>Worked through with two peer departments:</p>
-<table>
-<thead>
-<tr>
-<th>Document</th>
-<th style="text-align: center;">Fin worker</th>
-<th style="text-align: center;">Fin manager</th>
-<th style="text-align: center;">Ops worker</th>
-<th style="text-align: center;">Ops manager</th>
-<th style="text-align: center;">Executive</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Public</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-</tr>
-<tr>
-<td>Finance internal</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">✓</td>
-</tr>
-<tr>
-<td>Finance confidential</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">✓</td>
-</tr>
-<tr>
-<td>Operations internal</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-</tr>
-<tr>
-<td>Operations confidential</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">✓</td>
-</tr>
-<tr>
-<td>Restricted</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">✓</td>
-</tr>
-<tr>
-<td>Personal</td>
-<td style="text-align: center;">owner only</td>
-<td style="text-align: center;">owner only</td>
-<td style="text-align: center;">owner only</td>
-<td style="text-align: center;">owner only</td>
-<td style="text-align: center;">owner only</td>
-</tr>
-</tbody>
-</table>
-<p>Stated as a predicate, a user may read a document when any of the following holds:</p>
-<ul>
-<li>its classification is <strong>public</strong>;</li>
-<li>its classification is <strong>internal</strong> and the user belongs to its owning department, at any level;</li>
-<li>its classification is <strong>confidential</strong> and the user is a manager in its owning department;</li>
-<li>its classification is <strong>restricted</strong> and the user is an executive;</li>
-<li>its classification is <strong>personal</strong> and the user owns it, which no other clause overrides;</li>
-<li>or the user is an <strong>executive</strong>, for any classification other than another person's personal material.</li>
-</ul>
-<p><strong>Levels are cumulative upward within a department.</strong> A Finance manager reads Finance internal as well as Finance confidential.</p>
-<p><strong>One deliberate asymmetry.</strong> Department scoping binds at worker and manager level and dissolves at executive level. A Finance manager reads Finance confidential but not Operations confidential; an executive reads both. Without this, an executive sitting in an Executive Office department would read no other department's material at all, which would prevent the pilot's executive from exercising organization-wide oversight (D3).</p>
-<p><strong>Two things this matrix is easy to state wrongly.</strong> Confidential sits with a department's <strong>management</strong>, not with every member of it. And cross-department reading happens only at public: internal is departmental, so no worker or manager reads another department's internal material at all.</p>
-<p><strong>There is no per-user exception, and no escape hatch.</strong> Nothing sits on the side of the matrix. When a user needs a document the matrix does not reach, the answer is to look again at that document's classification during AWA-operated pre-pilot scoping, with the customer approving the change (D6). A document one person legitimately needs across the boundary is usually evidence that its classification is wrong, not evidence that an exception is needed. A per-user grant would paper over exactly the mistake the pilot is there to find, and it would turn a one-sentence security answer into an audit of who was excepted from what.</p>
-<p><strong>Cost accepted:</strong> reclassifying widens access to everyone the new classification reaches, which is a blunter instrument than a grant. The customer approves that widening rather than AWA deciding it. If a real deployment needs per-person exceptions, the pilot will surface it.</p>
-<p><strong>What Restricted is for, and what it will not show.</strong> A real organization has board-level material that sits above every department, and a customer will ask where it goes. Modelling it costs one row. But with one executive in a cohort this size, exactly one person can read it, so the pilot produces no evidence about it. Its presence in the matrix is an answer to a question, not a tested capability.</p>
-<p><strong>Why two axes rather than one.</strong> Two colleagues in the same department at different levels get different answers to the same question, which is sharper evidence than cross-department alone, and the cohort's three teams test the horizontal axis as well (D3). Oversight is then one mechanism with three scopes: self, department, and organization, matching how the customer describes its own structure.</p>
-<p><strong>Guard, and it matters.</strong> The manager role grants visibility and nothing else. A Flow has no approval gate, and the manager role must never become a place to reattach one (D22).</p>
-<p>The <strong>AWA operator</strong> is backstage and is not a customer-facing role.</p>
-<h3 id="d11-sign-in-is-a-magic-link-with-google-sign-in-as-an-accelerator">D11. Sign-in is a magic link, with Google sign-in as an accelerator</h3>
-<p>The user enters their work email and receives a one-time link. Where the customer runs Google Workspace, one-click Google sign-in is offered as a faster path to the same place. There is no password. A sliding session extends on use, survives a deploy, and is long enough that an ordinary week never interrupts work while staying short enough to defend to a security reviewer. Explicit sign-out is always available.</p>
-<p><strong>Why these two together are one auth system, not two:</strong> both resolve a verified email address into a session, so one user record is keyed on email with two ways to prove ownership. Magic link plus SAML would be two identity models; magic link plus Google is not.</p>
-<p><strong>Why magic link is the floor:</strong> it works whatever mail provider the customer runs, and the customer's stack is unknown at the time this is built. Google sign-in only works on Workspace, but where it works it removes the email-deliverability risk entirely, which is magic link's one real weakness against Vietnamese corporate mail filters.</p>
-<p><strong>Why no password:</strong> the security reviewer's first question is answered with "we store none, authentication is delegated to your corporate mailbox, which your own MFA already protects." That closes credential storage, password policy, and MFA in one sentence. It also matches the small, AWA-operated onboarding model rather than requiring customer self-service administration (D6): provisioning adds an address to the pilot allowlist and deprovisioning removes it.</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li><strong>Two layers of admission.</strong> The email domain is restricted to the customer's, and only provisioned addresses may sign in. Each customer has a separate deployment and database, so the allowlist is per-customer and small (D8).</li>
-<li><strong>Sessions cannot live only in memory.</strong> The product ships changes during the live three-week pilot without forcing re-login, so the session must survive a deploy (D1). The exact duration is a spec setting, not a decision.</li>
-<li><strong>Password reset does not exist</strong>, because there is no password. A refresh token is replaced by the sliding session.</li>
-<li><strong>Account recovery is mailbox access.</strong> Where that fails, the AWA team hand-generates a sign-in link, which is also the fallback when a mail filter blocks the link at onboarding. At ten hand-onboarded users this is a message to the team, not a self-service flow.</li>
-</ul>
-<h3 id="d12-the-product-works-in-vietnamese-not-only-in-english">D12. The product works in Vietnamese, not only in English</h3>
-<p>Three commitments. The interface toggles between English and Vietnamese. Retrieval works over a Vietnamese corpus. An answer is written in the language of the question, at a standard the user can send onward without rewriting it.</p>
-<p><strong>Why:</strong> the first pilots are in Vietnam and most of a customer's material will be Vietnamese. A product that retrieves English well and Vietnamese poorly fails at the first question, and it fails invisibly: retrieval still returns something, so a broken index reads as a bad answer.</p>
-<p><strong>What each commitment costs:</strong></p>
-<ul>
-<li><strong>Interface.</strong> A toggle between the two languages, which the demo build already carries.</li>
-<li><strong>Retrieval.</strong> Chunking and embeddings that handle Vietnamese rather than English-tuned defaults. Vietnamese carries diacritics and segments words differently, so a default pipeline degrades quietly rather than failing loudly. This is a criterion inside open question 4, not a separate build.</li>
-<li><strong>Output.</strong> Vietnamese answer quality is a model-choice criterion, and it binds harder than English quality does. The pilot treats outward delivery as a satisfaction signal, and nobody delivers prose they would be embarrassed to put their name on (D4).</li>
-</ul>
-<h2 id="3-core-work-loop--from-governed-answer-to-outward-delivery">3. Core work loop — from governed answer to outward delivery</h2>
-<h3 id="d13-outward-delivery-is-in-pilot-scope-and-the-user-downloads-a-file-and-delivers-it-themselves">D13. Outward delivery is in pilot scope, and the user downloads a file and delivers it themselves</h3>
-<p>A user can take a finished Artifact out of AWA to a recipient who is not an AWA user. AWA renders a file. The user does what they want with it. AWA does not send mail, hold an address book, or take a recipient address.</p>
-<p><strong>Why outward delivery is in scope:</strong> The output of a real recurring job is owed to someone outside the pilot cohort. A user who cannot send it will paste or screenshot it, which strands the work from its evidence far worse than a governed delivery would. A no-export boundary is correct for a demo and does not apply to a pilot.</p>
-<p><strong>Why a downloaded file:</strong> A downloaded file gives the user the same outcome at a fraction of the build and keeps AWA out of operating as a mail sender inside a customer's domain during a three-week pilot. The recipient's identity was never reliably knowable anyway, since any recipient can forward.</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li>Citations must be rendered into the file, because there is no session on the other side (D18).</li>
-<li>Delivery is where the permission boundary is bypassed by design: a user retrieves confidential material inside their perimeter and carries it out. This cannot be prevented without breaking the user's actual job, and no classification-based block is proposed.</li>
-<li>What can be done cheaply is to record the export: who, which Artifact, which version, when, and which classification levels its sources drew on. That record is the answer to the first question a security reviewer asks, every field is already known at the moment of export, and <strong>it ships at MVP</strong>. The pilot then counts those outward deliveries per completed work cycle as a satisfaction signal (D4).</li>
-</ul>
-<h3 id="d14-pdf-and-docx-always-xlsx-only-when-the-artifact-contains-a-table">D14. PDF and DOCX always, XLSX only when the Artifact contains a table</h3>
-<p><strong>Why:</strong> The format menu follows the Artifact's content. PDF and DOCX carry any Artifact. Offering XLSX on a narrative Artifact produces one cell of prose and reads as a broken product.</p>
-<p><strong>Consequence:</strong> PPTX is out of the MVP. If users request it during iteration one, rank that request with the other feedback.</p>
-<h3 id="d15-the-artifact-is-a-genuinely-editable-document-and-is-shareable-for-comment">D15. The Artifact is a genuinely editable document, and is shareable for comment</h3>
-<p>Editing is direct, the way a document is edited. It is not a suggestion-and-approval mechanism. Colleagues can be invited to comment and give feedback.</p>
-<p><strong>Why:</strong> No office worker sends AI output unedited. They are accountable for it and always change something. If editing is awkward they paste into Word, and at that moment citations, versions, export, and provenance all die. Editing has to be good enough that nobody reaches for Word.</p>
-<p><strong>Consequence:</strong> Artifact content is composed blocks, prose and tables, not a prose dump. The email-with-an-inserted-table example requires it. Generated figures and charts are out of the MVP: nothing in this document argues for a charting engine, and an iteration-one request can rank it.</p>
-<h3 id="d16-the-knowledge-base-is-a-document-reader-plus-search-not-a-browsable-hierarchy">D16. The Knowledge Base is a document reader plus search, not a browsable hierarchy</h3>
-<p>Flat searchable list with filters. No folder tree. The primary way into a document is a citation. Search is the secondary way in, for when the user wants the file rather than an answer.</p>
-<p><strong>Why:</strong> There are only three real reasons an office worker touches a document directly. Verifying a citation, which needs a reader reachable from that citation. Getting the file itself, which needs find-by-name. Orienting on the first day, which the perimeter count already half answers and which decays to nothing by week two. None of them is browsing.</p>
-<p><strong>Why a hierarchy is actively wrong:</strong> the stated problem is that nobody knows which department owns which policy. A folder tree requires the user to know the filing system the product exists to abolish. The hand-onboarded pilot corpus is also small enough that browsing would work, and building for that size produces something that breaks at a thousand documents. Search-first is correct at both.</p>
-<h3 id="d17-an-artifact-is-shared-with-named-people-only">D17. An Artifact is shared with named people only</h3>
-<p><strong>Why, and it is governance rather than simplicity:</strong> an Artifact can carry content drawn from confidential material. Sharing it to a whole department delivers that content to people whose own perimeter would never have returned the underlying source, in bulk, in one gesture, with nobody having considered it. Named sharing makes every disclosure deliberate and attributable to someone accountable for it. This governance rule stands even though a reported wrong disclosure is investigated and carried into the exit decision rather than ending the pilot automatically (D4).</p>
-<p><strong>Known ceiling, accepted:</strong> named-recipient-only Artifact sharing becomes inadequate when a real deployment wants a team-wide reference document and the team is forty people. This is a post-pilot problem with an obvious upgrade path.</p>
-<h3 id="d18-citations-are-inline-and-land-on-a-page-or-a-sheet">D18. Citations are inline, and land on a page or a sheet</h3>
-<p>Each material claim in an answer carries an inline marker. Following it lands on the place in the document that supports the claim. On export the marker stays beside the claim and a source list at the end of the file gives document title and locator for each one, followed by the Artifact's owner, version, and export date.</p>
-<p><strong>The locator follows the format.</strong> Page for PDF, DOCX, TXT and Markdown; sheet for XLSX. Cell-level precision is not needed: a reader who has the sheet can find the figure.</p>
-<p><strong>Why locator-aware rendered citations belong to the core work loop rather than refinement:</strong> outward delivery produces a file for a recipient who has no AWA account or session (D13). An exported claim citing only a document name is not checkable by the recipient, which reproduces exactly the stranding the product exists to remove. Document-level chips are the prior behaviour, not the claim.</p>
-<p><strong>Cost accepted:</strong> locator-aware chunking and locator storage at ingestion.</p>
-<p><strong>Not chosen:</strong> passage-level highlighting. It is stronger evidence but needs character offsets that survive re-ingestion and document updates, plus a viewer that renders highlights across PDF, DOCX, and XLSX. Page granularity is enough for a reader to check a claim.</p>
-<h3 id="d19-the-rebuild-keeps-the-current-interface-shape">D19. The rebuild keeps the current interface shape</h3>
-<p>The rebuild is not redesigned from scratch. The shape below is design input for it, observed from the current application's routes and from live captures taken on 2026-08-03.</p>
-<p><strong>Why:</strong> The interface is the one part of the demo build the rebuild inherits rather than replaces. It works, and redesigning it costs weeks while buying nothing the pilot measures. The pilot measures task completion, effort between generation and outward delivery, and disclosure incidents; it does not measure the shell in which the work happens (D4). Keeping the shape also means the screens already shown to prospects stay true while the substance underneath them is rebuilt.</p>
-<p><strong>Landing is chat.</strong> The organization index opens a new chat. There is no dashboard. The first useful moment is a question, which is what the adoption argument requires.</p>
-<p><strong>The perimeter is visible.</strong> The user's name, their department, and a live count of the documents they are authorized to read sit in the rail. The permission boundary is a persistent visible fact rather than a hidden mechanism.</p>
-<p><strong>Three places to go, alongside the chat list:</strong> Knowledge Base, Artifacts, Flows. The user creates a Flow directly from the current chat after that chat has produced acceptable work (D28).</p>
-<p><strong>Two things the rebuild changes inside that shape.</strong> Answers replace document-level source chips with inline markers that open the supporting page or sheet (D18). Run traces replace free-form steps with the fixed Gather, Reason, Produce, Check phase spine (D25).</p>
-<h2 id="4-shared-artifact-and-flow-contracts">4. Shared Artifact and Flow contracts</h2>
-<h3 id="d20-one-sharing-model-for-artifacts-and-flows-named-recipient-two-rights-comment-always-on-copy-always-available">D20. One sharing model for Artifacts and Flows: named recipient, two rights, comment always on, copy always available</h3>
-<p>The owner shares to a <strong>named person</strong> and grants either <strong>view</strong> or <strong>edit</strong>. For a Flow, view includes run. Commenting is available to anyone with access. Copying or forking is available to anyone with access. Only the owner can delete, reshare, or transfer ownership.</p>
-<p><strong>Why per-recipient rights rather than a product-wide rule:</strong> it is the model everyone already knows from shared drives, so it costs no learning. It also turns fork-versus-edit from a law the product imposes into a choice the owner makes per person.</p>
-<p><strong>Why comment is not a withholdable tier:</strong> a Flow has no approval gate; review means the owner shares it and invites feedback (D22). A comment-only tier would let an owner share while withholding the only thing sharing is for.</p>
-<p><strong>Why copy cannot be withheld:</strong> a Flow's instruction is plain text a recipient can read and retype in seconds. A no-copy right would be theatre.</p>
-<p><strong>What edit rights require:</strong> a Flow is executable, so a change alters what other people's runs produce. Every run records the version it used, and a change notifies others who have access. A shared document does not have this problem; a shared executable does.</p>
-<p><strong>Why one model for both objects:</strong> halves the surface to build, document, and test, and a user learns it once.</p>
-<h3 id="d21-one-lifecycle-for-artifacts-and-flows-autosave-draft-until-published-then-versioned">D21. One lifecycle for Artifacts and Flows: autosave, draft until published, then versioned</h3>
-<p>An object autosaves continuously and is never lost. While it is unshared and unexported it is a <strong>draft</strong> and has no versions. From its first share or export onward, every saved change cuts a <strong>version</strong>. Every share, export, and run records the version it used. There is no save button on either object.</p>
-<p><strong>Why one rule for both:</strong> Artifacts and Flows already share the same named-recipient, view-or-edit, comment-and-copy model (D20). Two different save models would undo that single mental model.</p>
-<p><strong>Why versions start at publication:</strong> a version exists to give somebody other than the owner a stable referent. Nobody needs a version of a thing only they have seen. Versioning private drafts produces a history nobody reads and turns "which version" in an export record into a number with no meaning.</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li>A draft is owner-only and unversioned, so oversight cannot expose it before its first share or outward delivery (D9).</li>
-<li>A saved change to a shared Flow cuts a new version and notifies everyone with access (D20).</li>
-<li>Every run records the numbered Flow version it executed and whether its instructions changed since the previous run, so the pilot can trace the exact method used (D4).</li>
-<li>The product also counts every run and shows that count as an observable trust signal on a shared Flow (D30).</li>
-<li>Every outward-delivery record and rendered citation stamp names the exact Artifact version that left AWA (D13, D18).</li>
-</ul>
-<h2 id="5-compounding-loop--capture-run-and-improve-a-method">5. Compounding loop — capture, run, and improve a method</h2>
-<h3 id="d22-a-flow-has-no-approval-gate-review-is-share-plus-invited-feedback">D22. A Flow has no approval gate. Review is share plus invited feedback</h3>
-<p>The person who creates a Flow owns and changes it. The Flow autosaves, and every share and run records the exact Flow version used (D21). Nobody signs it off. To "review" a Flow means its owner shared it and asked for comment.</p>
-<p><strong>Why:</strong> Requiring a superior's approval before someone can save their own method is friction on the exact user the product is for. The person doing the work owns the method. An approval queue reintroduces the waiting that the whole pitch is against.</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li>Approval was carrying a trust signal: a colleague knew a shared Flow was worth reusing because someone accountable had endorsed it. A shared Flow instead shows its owner and department, run count, last successful run, and last-edit time (D30). Those facts preserve a trust signal without making anyone wait.</li>
-<li>What leaves the vocabulary is <strong>review as a gate</strong>: a step someone else must pass before the work proceeds. The ordinary word remains available, as when a user reviews a proposed instruction before confirming it. A Flow is owned, versioned, shared, and commented on.</li>
-</ul>
-<h3 id="d23-flows-are-background-jobs-and-concurrency-is-a-first-class-requirement">D23. Flows are background jobs, and concurrency is a first-class requirement</h3>
-<p>A user runs multiple Flows at once. A user holds multiple chats at once, and multiple chats belonging to the same user run simultaneously. This is parity with what people already expect from Claude and ChatGPT, and it is treated as table stakes rather than an advanced capability.</p>
-<p>Worked example: one user runs a Flow that produces a report while a second Flow writes an email with an inserted table, both at the same time, neither blocking the other or the user's live chat.</p>
-<p><strong>Why:</strong> Flow is a core feature, not a saved method. Attended synchronous reuse is not what makes it valuable. The backend is being rebuilt, so the execution model is a design choice available now rather than a retrofit.</p>
-<p><strong>Consequences:</strong></p>
-<ul>
-<li>Execution is durable and outlives the request: a run survives the user navigating away or closing the tab, and one user cannot exhaust the instance for everyone else.</li>
-<li>Every run is recorded: its state, when it ran, the version it executed, and its outcome.</li>
-<li><strong>Run-time identity.</strong> A background run resolves sources against the <em>invoker's</em> access at the moment it runs, never the author's and never a cached snapshot. This is non-negotiable and is the point where a background queue can silently break the product's central claim.</li>
-</ul>
-<h3 id="d24-the-user-corrects-a-run-and-never-authors-a-workflow">D24. The user corrects a run, and never authors a workflow</h3>
-<p>A Flow is not a graph the user builds and not an opaque saved prompt. The agent executes, the run renders as phases, and the user attaches an instruction to a phase.</p>
-<p><strong>Two layers, and only one is fixed.</strong> Every Flow uses the same Gather, Reason, Produce, Check phases (D25). The sub-actions inside a phase are whatever the agent did on that run and vary run to run. Instructions attach to phases. Sub-actions are shown so the user can see what happened, not so they can aim at it.</p>
-<p><strong>The distinction that matters:</strong> a structure the user <em>authors</em> is programmer thinking and no office worker will do it. A run the user <em>reads and corrects</em> is how know-how gets captured, because a phase is a place a correction can be aimed precisely, and the universal spine keeps those attachment points stable from run to run (D25).</p>
-<h3 id="d25-step-identity-is-stabilized-by-a-fixed-universal-phase-spine">D25. Step identity is stabilized by a fixed universal phase spine</h3>
-<p><strong>The fixed Gather, Reason, Produce, Check spine is a hypothesis about agentic harness design, not a settled choice.</strong> The pilot exists to test this frame. Build the thinnest version that can be proven wrong, and harden it only if it survives three cycles.</p>
-<p><strong>Gather → Reason → Produce → Check.</strong> The same four phases for every Flow. The agent does whatever it needs inside a phase and the trace shows those sub-actions, but the phases never move.</p>
-<p><strong>Why:</strong> If the agent freely decides its own steps each run, an instruction attached to "step 3" lands on retrieval one day and formatting the next, and the whole annotation model collapses. Stable step identity is the precondition for attaching a correction to an observed phase rather than asking the user to author a workflow (D24). A universal spine also means the user learns one mental model rather than one per Flow.</p>
-<p><strong>Why these four:</strong> office knowledge work is find it, think about it, write it up, check it. The spine holds against a weekly ops report, a policy check, a meeting brief, and an email with a table.</p>
-<p><strong>Evidence from the current build.</strong> A live trace captured on 2026-08-03 reads: 1. Execution plan, 2. Searched governed knowledge, 3. Computed exact figures, 4. Computed exact figures, 5. Computed exact figures. Three identical steps, and the count varies by question. There is no stable identity to attach an instruction to, so the spine fixes a demonstrated problem rather than a suspected one.</p>
-<h3 id="d26-soft-knowledge-is-seven-concrete-categories">D26. Soft knowledge is seven concrete categories</h3>
-<p>"Preferences and tastes" is too vague to build. What actually leaves with an employee is:</p>
-<table>
-<thead>
-<tr>
-<th>Category</th>
-<th>Example</th>
-<th>Phase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Source preference</td>
-<td>"The ERP export is stale, use Finance's close file"</td>
-<td>Gather</td>
-</tr>
-<tr>
-<td>Exclusions</td>
-<td>"Never include subsidiary X in group figures"</td>
-<td>Gather</td>
-</tr>
-<tr>
-<td>Thresholds</td>
-<td>"Flag any variance over 5%, and every overdue item however small"</td>
-<td>Reason</td>
-</tr>
-<tr>
-<td>Audience anticipation</td>
-<td>"The CFO always asks about FX, pre-empt it"</td>
-<td>Reason</td>
-</tr>
-<tr>
-<td>Output shape</td>
-<td>"Three sections, risks last, one page maximum"</td>
-<td>Produce</td>
-</tr>
-<tr>
-<td>Register and vocabulary</td>
-<td>"No bullets for the board. We say variance, never discrepancy"</td>
-<td>Produce</td>
-</tr>
-<tr>
-<td>Provenance habits</td>
-<td>"Any number going to the board carries its source"</td>
-<td>Check</td>
-</tr>
-</tbody>
-</table>
-<p>The Phase column is one possible view, not a proof. It places the seven categories on the universal Gather, Reason, Produce, Check spine (D25). This was the test the spine had to pass: a category that refused to sit on any phase would have meant the spine was wrong. None refused, but the assignment is ours and the Check column holds one category, which is what open question 5 examines.</p>
-<p><strong>Consequence:</strong> the Gather phase holds retrieval intent plus source rules, not fixed document identifiers. A Flow re-retrieves every run and stays useful next week. Each run records which documents it actually used, which is what keeps it auditable.</p>
-<h3 id="d27-instructions-arrive-two-ways-and-the-second-is-never-silent">D27. Instructions arrive two ways, and the second is never silent</h3>
-<p>Flow instructions arrive either when the user types one onto a phase or when the system proposes a candidate rule from the user's corrections to the produced Artifact and the user confirms it.</p>
-<p><strong>One correction is enough to propose from.</strong> Waiting for a repeated pattern would mean waiting for runs that do not exist: a weekly workflow inside a three-week window gives at most three runs. The user completes the core work loop first and is expected to save the successful chat as a Flow only around cycle two (D5). One correction is all the evidence there will be; the user confirms or dismisses in one tap either way, and the cost of a noisy proposal is one tap.</p>
-<p><strong>Why the second matters more:</strong> the user edits the Artifact regardless, because they are accountable for the output and always change something. Capturing that is nearly free and requires no decision to maintain a Flow.</p>
-<p><strong>Why correction-derived instructions must be proposed rather than adopted:</strong> silent learning calcifies one-off edits into permanent rules and the Flow rots. A Flow has no approval gate, but each permanent instruction still requires its owner's explicit confirmation (D22). The Flow is improved deliberately, not silently edited. The reviewer is the owner and the review is one tap.</p>
-<h3 id="d28-a-flow-is-created-from-a-chat-session-that-already-worked">D28. A Flow is created from a chat session that already worked</h3>
-<p>Nobody authors a Flow from an empty form. The user does the job in chat, argues with it until the output is acceptable, then saves that session as a Flow.</p>
-<p><strong>Consequence:</strong> Flow authoring costs almost no new surface. One action on a good session, plus a plain-text editor. A Flow holds up to four instruction texts, one per phase, each editable afterwards as plain prose. There is no separate whole-Flow instruction blob: everything a user writes lands on a phase. This keeps both explicit corrections and system-proposed candidate rules attached to the observed part of the run they amend (D24, D27).</p>
-<h3 id="d29-running-work-gets-no-destination-of-its-own">D29. Running work gets no destination of its own</h3>
-<p>A running Flow renders the same way the user already sees a question being answered in chat. Reaching in-flight and recent runs, and being told when one finishes, do not require a new place to go.</p>
-<p><strong>Why reuse what the user already knows:</strong> a user who has asked one question already understands how a run renders, so a background run costs no new mental model.</p>
-<p><strong>Why no Activity page:</strong> every run belongs to a Flow and every result is an Artifact, so an Activity page has nothing left to do. Promoting runs to a peer of Chat, Artifacts, and Flows would imply they are things you go and manage, which is workflow-engine thinking.</p>
-<p><strong>The principle, which settles a class of later questions:</strong> a run is how the work happened, the Artifact is the work. Anything needed tomorrow lives in Artifacts.</p>
-<h3 id="d30-trust-in-a-shared-flow-comes-from-observable-facts-not-a-badge">D30. Trust in a shared Flow comes from observable facts, not a badge</h3>
-<p>A shared Flow shows its owner and department, its run count, its last successful run, and when it was last edited. There is no endorsement mark and nothing is gated.</p>
-<p><strong>Why:</strong> a Flow has no approval gate, so no endorsement can tell a colleague the method is worth reusing (D22). These facts let them weigh observable evidence instead, without making anyone wait.</p>
-<p><strong>Cost accepted:</strong> a brand-new Flow with no runs carries no signal at all. At a cohort of ten colocated people, knowing the owner covers that gap.</p>
-<p><strong>Not chosen:</strong> an optional endorsement badge. A badge that gates nothing is still read as an approval, which would quietly rebuild the sign-off culture that the no-approval Flow model excludes (D22).</p>
+<header class="masthead"><p class="kicker">AWA / pilot MVP / executive decision board</p><h1>Pilot MVP decisions</h1><p>A real, concise reading layer for the pilot contract. <a href="full-record.html">Read the complete decision record</a> when an implementation or governance detail matters.</p></header>
+<div class="layout"><nav class="nav" aria-label="Executive decision sections"><strong>On this page</strong></nav><main>
+<section class="summary" aria-labelledby="summary-title"><div><p class="kicker" style="color:var(--muted);margin-bottom:8px">Executive edition</p><h2 id="summary-title">The pilot is a learning instrument, not a proof exercise.</h2><p>One entity, one recurring weekly workflow, named people and owner, with an explicit expand, revise, or stop decision after three real cycles.</p></div><div class="metric"><strong>3 weeks</strong><span>Three one-week iterations</span></div><div class="metric"><strong>30</strong><span>Decisions D1–D30</span></div></section>
+<aside class="notice"><strong>Pilot-one status — 2026-08-03:</strong> Tasco’s Tax/Accounting/Finance department is confirmed. The operating entity, weekly-or-more-frequent workflow, sponsor, and dedicated owner remain unnamed and block the start.</aside>
+<article class="brief"><h2 id="0-context-and-vocabulary">0. Context and vocabulary</h2>
+<p>AWA’s authoritative pilot-MVP decision record states choices,
+reasons, and open questions. Specifications, user stories, and prospect
+material derive from it; a conflicting specification is wrong, and an
+abandoned decision must be changed here. Numbering does not make
+decisions optional. This record states behavior, not a delivery
+plan.</p>
+<p>Pilot one is confirmed as of 2026-08-03: Tasco, in
+Tax/Accounting/Finance; pilots two and three are not. Each choice must
+work regardless of customer. Tasco’s operating entity, workflow, and
+sponsor plus dedicated owner remain unnamed and block start. AWA
+captures recurring-work know-how inside the customer’s governed material
+and keeps it theirs. It is not a data-residency product. Retrieval is
+the lower bar; captured, improving methods are the objective. Retrieval
+without method capture is only a search box.</p>
+<p>The MVP is a rebuild. The existing FastAPI application remains the
+sales-demo surface but neither constrains nor credits it. Its repository
+is too disordered to govern delivery, and the demo showed an undiagnosed
+roughly seventy-second pause while application and database were awake.
+Those facts reject that foundation, not a governed, concurrent,
+multi-user system.</p>
+<p>A pilot is one entity, recurring workflow, and dedicated owner—the
+smallest thing yielding a real decision, not a group rollout.
+Interviews, provisioning, sandbox setup, corpus loading, ingestion, and
+permission scoping are pre-pilot; the clock starts with real work. Demo
+and pilot use one product, never a customer-specific fork; pilot
+requests set the roadmap. Evidence is user behavior and feedback, not
+screenshots, tests, or delivery counts. At most three early pilots run
+at once—two in Vietnam and ideally one elsewhere in Southeast
+Asia—because the three-person team directly engages each.</p>
+<p>A pilot requires all four binary entry conditions: named people who
+already do the work; their real documents, even if curated read-only; a
+job they were already accountable to do that week; and an agreed
+feedback channel and cadence that informs product change. A dedicated
+owner is the named customer interface able to convene users; the pilot
+cannot start without one, though the product does not model their
+internal authority. The fixed end date culminates in an expand, revise,
+or stop decision, preventing indefinite evaluation. A baseline of three
+to five completed real examples is reviewed before start for qualitative
+comparison, not a saving percentage or benchmark. Each of the three
+one-week iterations comprises real use, feedback, and a shipped
+change.</p>
+<p>An Artifact is a user-owned document from chat or a Flow, then
+directly edited, shared, exported, and delivered. A Flow is a saved
+method from a chat that already worked; it re-retrieves against the
+invoker’s access in the background and produces an Artifact. Every Flow
+displays Gather, Reason, Produce, Check; phase instructions are stable
+while sub-actions vary and are display-only. Personal space is
+owner-only and unshareable, not an Artifact store. Outward delivery
+means AWA renders and records export, then the user delivers to a
+non-user. Citations retain markers and printed locators because
+recipients lack accounts. For pilots one through three, AWA proposes
+each classification and owning department; the customer approves before
+sign-in.</p>
+<h2 id="1-pilot-contract-and-acceptance">1. Pilot contract and
+acceptance</h2>
+<p><strong>D1–D2.</strong> The pilot is a fixed three-week,
+three-iteration window, with the exit decision fixed before start and a
+mutable product inside it. Each week uses the product, gathers feedback,
+and ships a change; three cycles let a week-one change be assessed in
+week three. Day one requires non-disruptive deployment, no lost data,
+forced re-login, or broken in-flight Artifact or Flow, and work that
+survives schema changes. The baseline precedes the clock. Artifact,
+Flow, and citation contracts remain frozen even when presentation and
+quality improve.</p>
+<p>The chosen workflow must run weekly or more often: a three-week pilot
+observes three weekly cycles and zero completed monthly or quarterly
+cycles. The previously used quarterly revenue snapshot and variance
+summary cannot be pilot workflows. Candidate qualification must ask
+cadence early. At Tasco, workflow choice is a live risk because monthly
+close and quarterly filing do not qualify; cash position, AR/AP aging
+review, and payment run are weekly candidates to test first. If the
+department has no weekly work, change the workflow or first cohort, not
+the window.</p>
+<p><strong>D3.</strong> The cohort is one executive over at least two
+peer units, each with a manager and workers. All produce real work.
+Executives see activity and shared or exported Flows and Artifacts
+across the cohort; managers see the same in their unit; neither sees
+private drafts or personal uploads. Two peer units are the minimum
+because one unit never tests differing perimeters. The hierarchy tests
+the governance-chain claim, creates real output readers, and lets the
+executive make the exit decision from firsthand evidence. Tasco’s three
+teams are the peer units and product departments; the intended cohort is
+about nine or ten people: one executive, plus a manager and two or three
+workers per team. Onboarding fixes the roster. The accepted cost is
+hand-onboarding users and documents and interviewing every producer
+weekly—roughly five hours plus synthesis for the three-person team.</p>
+<p><strong>D4.</strong> Primary exit evidence is binary task completion:
+whether each producer completed their genuine recurring job in each
+cycle. Nine or ten people over three cycles yield 27–30 observations.
+Quality is the effort-to-export trend: manual editing and rerunning
+between generation and sending should decline after the user teaches a
+Flow. Heavy cycle-one editing is expected; cycle-three decline
+demonstrates compounding. A rerun after an instruction is learning; an
+unchanged rerun is failure. Editing wrong output is failure; editing to
+add irreplaceable human judgment is correct behavior. Export, counted
+per completed cycle rather than raw volume, is the satisfaction signal:
+voluntarily putting one’s name on an Artifact and sending it outside the
+cohort.</p>
+<p>A wrong disclosure is investigated immediately and carried into the
+exit decision, not automatically stopped; it outranks other engineering
+priorities. AWA-proposed, customer-approved misclassification differs
+from enforcement failure; only the latter evidences authorization
+behavior. Users need a reporting channel, since zero reports otherwise
+prove nothing. No time-saving percentage is claimed: mutable-product
+timing is weak, and the baseline is qualitative only. The MVP records
+generated/exported content for diffing; generation, edit, and export
+times; Flow version and instruction changes; export distinct from
+sharing; and user, Artifact version, time, and source
+classifications.</p>
+<p><strong>D5.</strong> The core loop must work first: ask in chat,
+receive a cited answer, promote it to an Artifact, edit it, and export
+it. It supports the weekly job on day one and includes non-negotiable
+retrieval governed by user level/department against document
+classification/owning department. The compounding loop saves a
+successful chat as a Flow, runs it in the background, attaches
+corrective instructions, and improves later runs. It must work at least
+partially. Expected evidence is core-loop-heavy cycle one, Flow creation
+around cycle two, and less editing in cycle three. Build core before
+compounding.</p>
+<h2 id="2-governance-and-runtime-foundations">2. Governance and runtime
+foundations</h2>
+<p><strong>D6–D7.</strong> Before the clock starts, AWA interviews
+users, collects/ingests the corpus, proposes document classifications
+and owning departments, and obtains customer approval of the
+per-document list. This avoids customer-authored-policy delay, reveals
+needed classification rules, and needs no customer-facing administration
+console. Approval attributes a later disclosure to approved scoping or
+enforcement, at an accepted onboarding cost. Customer-authored
+classification remains a product differentiator but is not live in
+pilots one through three, where AWA authors proposals; do not present
+this as the permanent model or a live customer-authorship claim. Manual
+operation does not scale beyond pilot three, and that is accepted.</p>
+<p>Users may upload only into personal space. Personal documents are
+retrievable solely by their owner, never enter the shared perimeter or
+administrator path, and never require user classification. They cannot
+be shared; a user may instead share a derived Artifact with named
+people. Native-text PDF, DOCX, XLSX, TXT, and Markdown are required. OCR
+of scanned documents is excluded; scans are identified during
+onboarding. The stated gap is ingesting Vietnamese paperwork, not
+understanding Vietnamese.</p>
+<p><strong>D8.</strong> Each pilot customer receives one deployment and
+one database; up to three pilots run three instances of the same image.
+Infrastructure, rather than code, is the isolation boundary. It provides
+a short security answer, makes per-customer location literal, and
+removes query-level organization scoping, cross-tenant leak testing, and
+tenant-aware caching. The organization identifier stays because late
+tenancy is expensive and a customer with two entities in one deployment
+will need it. Deployment must reach every live instance without
+disrupting users. Shared product means same image and interface, not
+shared deployment. One entity per deployment limits evidence to
+department and level governance, not group-wide multi-entity governance.
+Tasco’s operating entity remains unnamed. Host, database, model
+provider, and storage are open, but any substrate must provide separate
+instance/database, deploy-resilient sessions, deployment to all live
+instances, and named region per customer.</p>
+<p><strong>D9–D10.</strong> Oversight sees who ran what and how often,
+shared or exported Artifacts and Flows, and access/export records.
+Managers are limited to their department; executives are
+organization-wide. Unshared drafts and personal uploads remain
+owner-only, and users are told this on day one. This makes personal
+space credible and preserves unobserved experimentation.</p>
+<p>Customer-facing roles are worker, manager, executive; AWA operator is
+backstage. Users have department and level; role changes only oversight
+reach and ability to read restricted material. Documents have
+classification and owning department. Public is for every authenticated
+user; Internal for every level in its owning department; Confidential
+for managers in its owning department; Restricted for executives
+organization-wide; Personal for its owner alone, never shareable. Levels
+accumulate upward. Executive access overrides departmental scope except
+for another person’s personal material, so executive oversight can be
+organization-wide. No per-user exception or escape hatch exists. A
+needed document outside the matrix requires reconsidering its
+classification through AWA-operated, customer-approved scoping.
+Reclassification widens access for everyone it reaches, an accepted
+blunter cost. Restricted answers the board-material question but is
+untested with one executive. At Tasco, “department” means each of three
+teams, not the larger Tax/Accounting/Finance department. Managers grant
+visibility only, never Flow approval.</p>
+<p><strong>D11–D12.</strong> Authentication is work-email magic link,
+accelerated by Google sign-in for Workspace customers; both resolve
+verified email to one account. There are no passwords. Sliding sessions
+extend with use, survive deploys, last through normal weekly work while
+remaining defensible to security review, and offer sign-out. Admission
+requires the customer domain and a per-customer provisioned-address
+allowlist. AWA can hand-generate a link if mail filters block delivery;
+exact session duration is a specification setting.</p>
+<p>The interface toggles English and Vietnamese, retrieval works over
+Vietnamese corpora, and answers use the question’s language at an
+onward-sendable standard. Vietnamese-capable chunking and embeddings are
+needed because English-tuned defaults may quietly fail on diacritics and
+segmentation. Model choice is more constrained by Vietnamese output
+quality than English. These tests belong to substrate selection.</p>
+<h2 id="3-core-work-loop--from-governed-answer-to-outward-delivery">3.
+Core work loop — from governed answer to outward delivery</h2>
+<p><strong>D13–D14.</strong> Outward delivery is MVP scope. AWA renders
+a finished Artifact as a downloadable file; the user delivers it. AWA
+sends no mail and holds neither address book nor recipient address. This
+enables the real external outcome without operating as a customer-domain
+sender. Export deliberately bypasses the retrieval perimeter: a user may
+carry legitimately retrieved classified material out; no classification
+block is proposed because it would break the job. AWA records exporting
+user, Artifact and exact version, time, and source classification
+levels, both for security review and as D4 evidence. PDF and DOCX are
+always available; XLSX is available only for Artifacts containing a
+table. PPTX is excluded and iteration-one requests are ranked with other
+feedback.</p>
+<p><strong>D15–D19.</strong> Artifacts are directly editable documents,
+not suggestion-approval mechanisms, and can be shared for comment.
+Editing must keep users out of Word, where citations, versions, export,
+and provenance would be lost. Content uses prose and table blocks;
+generated figures and charts are out. The Knowledge Base is a flat
+searchable, filterable reader, not a folder hierarchy. Citations are the
+main entry point and search supports verification or finding a file; a
+tree requires the filing knowledge the product seeks to remove and fails
+at scale.</p>
+<p>Artifacts share only with named people, making disclosure of
+confidential-derived content deliberate and attributable. This is
+knowingly inadequate for a future forty-person reference document but is
+post-pilot. Each material claim has an inline citation opening its
+supporting page or sheet. Exports preserve markers and list document
+title and locator, then Artifact owner, version, and export date.
+Locators are pages for PDF, DOCX, TXT, and Markdown and sheets for XLSX.
+Passage-level highlighting is excluded because durable offsets and
+cross-format viewers cost more than needed.</p>
+<p>The rebuild retains the observed demo shape: landing opens chat, not
+a dashboard; the rail shows name, department, and authorized-document
+count; Knowledge Base, Artifacts, and Flows sit beside chats; and a
+successful chat can create a Flow. It changes document source chips to
+inline locator citations and free-form run steps to the fixed phase
+spine. This avoids redesign cost and preserves the pilot’s focus on
+completion, effort-to-export, and disclosures.</p>
+<h2 id="4-shared-artifact-and-flow-contracts">4. Shared Artifact and
+Flow contracts</h2>
+<p><strong>D20–D21.</strong> Artifacts and Flows use named-person
+sharing. Owners grant view or edit; Flow view includes run. Everyone
+with access may comment, copy, or fork; only owners delete, reshare, or
+transfer. Per-recipient rights are familiar; comment cannot be withheld
+because review is feedback, and copy prevention is theatre. A Flow edit
+can change others’ results, so each run records its version and changes
+notify everyone with access.</p>
+<p>Objects autosave. Before first share or export they are unversioned
+owner-only drafts; from first publication, every saved change creates a
+version and shares, exports, and runs record it. There is no save
+button. This preserves private drafts, gives recipients stable
+referents, supports Flow tracing and trust signals, and stamps exact
+Artifact versions on exports and rendered citations.</p>
+<h2 id="5-compounding-loop--capture-run-and-improve-a-method">5.
+Compounding loop — capture, run, and improve a method</h2>
+<p><strong>D22–D25.</strong> A Flow has no approval gate. Its creator
+owns and changes it; review means sharing and invited comment. Requiring
+sign-off would recreate the delay AWA rejects. Trust comes instead from
+owner and department, run count, last successful run, and last-edit
+time.</p>
+<p>Flows are durable background jobs. Users may run multiple Flows and
+chats concurrently, including simultaneous chats for one user; runs
+survive navigation or tab closure, cannot exhaust the instance, and
+record state, time, version, and outcome. Each run resolves sources
+against the invoker’s current access at run time—not the author’s access
+or a cached snapshot.</p>
+<p>Users correct a Flow rather than author a graph, DAG, or opaque
+prompt. All runs display Gather, Reason, Produce, Check. Sub-actions
+vary and explain the run, but only phases receive instructions. The
+fixed spine is a testable agent-harness hypothesis: build the thinnest
+version that can be disproved and harden it only after three cycles. It
+solves the demonstrated unstable, repeated current-build step traces and
+gives correction targets that remain stable across runs.</p>
+<p><strong>D26–D28.</strong> Soft knowledge is seven concrete types:
+source preference and exclusions in Gather; thresholds and audience
+anticipation in Reason; output shape plus register and vocabulary in
+Produce; provenance habits in Check. This mapping is a proposed test,
+not proof. Gather stores retrieval intent and source rules, never fixed
+identifiers; each run re-retrieves and records actual documents for
+currency and auditability.</p>
+<p>Instructions arrive when a user writes one on a phase or when the
+system proposes a candidate rule from Artifact corrections. One
+correction is enough to propose from because the pilot allows at most
+three weekly runs, but no candidate is silently adopted: its owner
+confirms or dismisses it in one tap. A Flow is created only from a chat
+that already worked, never from an empty form. It uses a plain-text
+editor with up to four editable phase instructions and no whole-Flow
+instruction blob.</p>
+<p><strong>D29–D30.</strong> Runs use chat’s existing rendering and
+completion notification; there is no Activity page. A run belongs to a
+Flow and produces an Artifact, and anything needed tomorrow belongs in
+Artifacts. A shared Flow shows owner, department, run count, last
+successful run, and last-edit time, not an endorsement badge. A new Flow
+has no run signal, an accepted cost for a colocated cohort of about ten;
+badges are excluded because even non-gating badges imply approval.</p>
 <h2 id="6-out-of-the-mvp">6. Out of the MVP</h2>
-<p>The pilot MVP excludes the capabilities below. Naming them prevents accidental build and lets the team rank an iteration-one request without reopening scope.</p>
-<ul>
-<li><strong>User-authored workflow structure:</strong> step or DAG builders, branching, and conditionals.</li>
-<li><strong>Autonomous execution:</strong> scheduling a Flow to fire on its own, such as at 08:00 Monday, and event triggers. User-started durable background execution is in scope; autonomous firing is not (D23).</li>
-<li><strong>Flow composition:</strong> Flow-to-Flow chaining.</li>
-<li><strong>Approval gates:</strong> no action waits for approval by anyone. Flow review is sharing plus invited feedback, never a gate (D22).</li>
-<li><strong>Simultaneous editing:</strong> co-editing is excluded.</li>
-<li><strong>Flow discovery surfaces:</strong> no Flow search, categories, or marketplace. A user will have four to six Flows, and the discovery surface is a list.</li>
-<li><strong>Additional output and ingestion formats:</strong> no PPTX export, generated figures or charts, or OCR of scanned documents.</li>
-<li><strong>Customer self-administration:</strong> no customer-facing administrator console.</li>
-<li><strong>Cross-tenant query scoping:</strong> each customer has a separate deployment and database, so application queries do not carry the pilot isolation boundary (D8).</li>
-<li><strong>Passage-level citation highlighting:</strong> citations land on a page or sheet, not a highlighted passage.</li>
-<li><strong>Broad or source-document sharing:</strong> no sharing of a personal document, to a department, or to everyone.</li>
-<li><strong>Per-user clearance grants:</strong> access is determined only by the level-and-department versus classification-and-owning-department matrix (D10).</li>
-</ul>
+<p>The MVP excludes user-authored workflow structure (step/DAG builders,
+branching, conditionals); autonomous scheduled or event-triggered Flow
+execution; Flow chaining; approval gates; simultaneous co-editing; Flow
+search, categories, and marketplace; PPTX, generated figures/charts, and
+OCR; customer-facing administration; application-level cross-tenant
+query scoping; passage-level citation highlighting; broad sharing and
+sharing personal source documents; and per-user clearance grants.
+In-scope alternatives are user-started durable background runs, a simple
+four-to-six-Flow list, page/sheet citations, named sharing, and
+matrix-based access.</p>
 <h2 id="7-open-questions">7. Open questions</h2>
-<p>These six open questions do not block the current decision record. Questions 1 to 3 must be answered before a pilot starts, which since 2026-08-03 means they are live rather than prospective, and question 4 before substantial platform work. Question 5 must be answered before the phase-spine contract enters a spec, and question 6 before the instruction-attachment contract enters a spec.</p>
+<p>These six questions do not reopen the record. Questions 1–3 must be
+answered before a pilot starts and are live for pilot one; question 4
+before substantial platform work; question 5 before the phase-spine
+contract enters a specification; and question 6 before the
+instruction-attachment contract enters a specification.</p>
 <ol type="1">
-<li>How weekly feedback is collected, and by whom.</li>
-<li>What happens to customer data when the pilot ends.</li>
-<li>Who supports users when something breaks mid-pilot.</li>
-<li>The substrate: host, database, model provider, and storage. The demo build runs on Fly.io in Singapore with Neon Postgres; AWS with Bedrock, a VPC, and S3-style storage has been discussed. Neither is committed. Any choice must preserve a separate instance and database per customer, a deploy that reaches every live instance, sessions that survive deploys, and a named deployment region (D8). The model and retrieval stack must also work over Vietnamese material and produce onward-sendable Vietnamese answers (D12).</li>
-<li>The fixed Gather, Reason, Produce, Check spine places only one of the seven soft-knowledge categories in <code>Check</code>: provenance habits, which may instead be a <code>Produce</code> rule (D25, D26). Three phases may do the work of four. Test whether Gather, Reason, and Produce are sufficient before the phase spine hardens into a spec.</li>
-<li>Whether phase-level instruction attachment is enough, or instructions must attach to sub-actions inside a phase. Phase-level is the working assumption, on the grounds that instructions are prose and prose already carries arbitrary specificity. Treat phase-level instruction attachment as a testable assumption rather than a hardened contract.</li>
+<li>How will weekly feedback be collected, and by whom?</li>
+<li>What happens to customer data when the pilot ends?</li>
+<li>Who supports users when something breaks mid-pilot?</li>
+<li>Which host, database, model provider, and storage will be used? The
+demo uses Fly.io in Singapore and Neon Postgres; AWS with Bedrock, a
+VPC, and S3-style storage has been discussed, but neither is committed.
+The choice must preserve D8’s isolation, deploy, session, and
+named-region properties and D12’s Vietnamese requirements.</li>
+<li>Is Check necessary? Only provenance habits currently use it and may
+be a Produce rule. Test Gather, Reason, and Produce before hardening the
+spine.</li>
+<li>Is phase-level instruction attachment sufficient, or must
+instructions attach to sub-actions? Phase-level is the working
+assumption because prose can be arbitrarily specific, but it remains
+testable rather than hardened.</li>
 </ol>
-  </article>
-  <footer>Standalone board generated from <code>pilot-mvp/decisions.md</code>. It embeds its styles and content; it has no remote assets or dependencies.</footer>
-</main>
-</div>
-</div>
+</article>
+<footer>This executive board is approximately 3,000 words. It condenses, but does not replace, the <a href="full-record.html">complete decision record</a>.</footer>
+</main></div>
 <script>
-// Keep the complete record in the page, while making the default reading surface compact.
-const article = document.querySelector('.source');
-const sectionHeadings = [...article.querySelectorAll(':scope > h2')];
-sectionHeadings.forEach((heading, index) => {
-  const nextHeading = sectionHeadings[index + 1];
-  const sectionNodes = [];
-  for (let node = heading; node && node !== nextHeading; node = node.nextElementSibling) sectionNodes.push(node);
-
-  const details = document.createElement('details');
-  details.className = 'record-section';
-  const summary = document.createElement('summary');
-  const body = document.createElement('div');
-  body.className = 'record-section-body';
-  const decisions = sectionNodes.filter((node) => node.matches('h3') && /^D\d+\./.test(node.textContent.trim()));
-  const count = document.createElement('span');
-  count.className = 'section-count';
-  count.textContent = decisions.length ? `${decisions.length} decision${decisions.length === 1 ? '' : 's'}` : 'orientation';
-
-  heading.parentNode.insertBefore(details, heading);
-  summary.append(heading, count);
-  details.append(summary, body);
-  sectionNodes.slice(1).forEach((node) => body.appendChild(node));
-});
-
-const revealHashTarget = () => {
-  const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
-  target?.closest('details')?.setAttribute('open', '');
-};
-window.addEventListener('hashchange', revealHashTarget);
-document.querySelectorAll('.nav a').forEach((link) => link.addEventListener('click', () => window.setTimeout(revealHashTarget, 0)));
-revealHashTarget();
-
-// Preserve table semantics while adding a scroll container for narrow viewports.
-document.querySelectorAll('.source table').forEach((table) => {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'table-wrap';
-  table.parentNode.insertBefore(wrapper, table);
-  wrapper.appendChild(table);
+const nav = document.querySelector('.nav');
+document.querySelectorAll('.brief h2').forEach((heading, index) => {
+  const id = `section-${index + 1}`;
+  heading.id = id;
+  const link = document.createElement('a');
+  link.href = `#${id}`;
+  link.textContent = heading.textContent.replace(/^\d+\.\s*/, '');
+  nav.append(link);
 });
 </script>
 </body>

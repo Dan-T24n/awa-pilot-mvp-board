@@ -1,6 +1,8 @@
 # AWA Pilot MVP decision board
 
-A public, standalone HTML reading board for the AWA pilot MVP decision record.
+A public, standalone executive board for the AWA pilot MVP decision record.
+
+`site/index.html` is the concise reading layer. `site/full-record.html` retains the complete decision record.
 
 ## View locally
 
